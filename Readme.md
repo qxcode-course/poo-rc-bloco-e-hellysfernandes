@@ -1,5 +1,5 @@
 ---
-nomeAluno: "Hellys Fernandes Barbosa
+nomeAluno: "Hellys Fernandes Barbosa"
 matricula: "582363"
 ---
 
