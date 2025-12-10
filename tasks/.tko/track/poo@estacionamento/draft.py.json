@@ -1,0 +1,14 @@
+{
+    "patches": [
+        {
+            "label": "2025-12-10_11-00-36",
+            "content": "@@ -1,12 +1,31 @@\n+@@ -1,206 +0,0 @@%0A-\n class Estaci\n@@ -33,17 +33,19 @@\n namento:\n-%0A\n+%250A\n     def \n@@ -51,33 +51,35 @@\n  __init__(self):\n-%0A\n+%250A\n         self.__v\n@@ -95,23 +95,33 @@\n list\n-%5B\n+%255B\n Veicolo\n-%5D = %5B%5D%0A\n+%255D = %255B%255D%250A\n     \n@@ -154,10 +154,14 @@\n = 0 \n-%0A%0A\n+%250A%250A\n clas\n@@ -170,17 +170,19 @@\n Veicolo:\n-%0A\n+%250A\n     def \n@@ -196,17 +196,19 @@\n _(self):\n-%0A\n+%250A\n         \n@@ -228,11 +228,17 @@\n r = \n-%22%22%0A\n+%2522%2522%250A\n     \n@@ -245,9 +245,12 @@\n     self\n+%250A\n %0A\n",
+            "lines": "2"
+        },
+        {
+            "label": "2025-12-10_11-12-42",
+            "content": "class Estacionamento:\n    def __init__(self):\n        self.__veicolos: list[Veicolo] = []\n        self.__horaAtual: int = 0 \n\nclass Veicolo:\n    def __init__(self):\n        self.__id: str = \"\"\n        self\n",
+            "lines": "9"
+        }
+    ]
+}
