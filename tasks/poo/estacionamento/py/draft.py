@@ -6,10 +6,19 @@ class Veicolo(ABC):
         self.__tipo = tipo
         self.__horaEntrada = horaEntrada
 
+    def getId(self) -> str:
+        return self.__id
+    
+    def getHoraEntrada(self) -> int:
+        return self.__horaEntrada
+    
+    def getTipo(self) -> str:
+        return self.__tipo
+
     @abstractmethod
     def calcularValor(self, saida: int):
         pass
-
+    
     def __str__(self) -> str:
         id = self.__id.rjust(10,"_")
         tipo = self.__tipo.rjust(10,"_")
@@ -20,14 +29,14 @@ class Bike(Veicolo):
         super().__init__(id, tipo, horaEntrada)
 
     def calcularValor(self, saida: int = 0) -> float:
-        return f"{3:2f}"
+        return f"{3:.2f}"
     
 class Moto(Veicolo):
     def __init__(self, id, tipo, horaEntrada):
         super().__init__(id, tipo, horaEntrada)
 
     def calcularValor(self, saida: int) -> float:
-        valor = (saida - self.__horaEntrada) / 20
+        valor = (saida - self.getHoraEntrada()) / 20
         return f"{valor:.2f}"
     
 class Carro(Veicolo):
@@ -35,7 +44,7 @@ class Carro(Veicolo):
         super().__init__(id, tipo, horaEntrada)
 
     def calcularValor(self, saida: int) -> float:
-        valor = (saida - self.__horaEntrada) / 10
+        valor = (saida - self.getHoraEntrada()) / 10
         if valor > 5:
             return f"{valor:.2f}"
         else:
@@ -55,17 +64,36 @@ class Estacionamento:
     def estacionar(self, veicolo: Veicolo) -> None:
         self.__lista.append(veicolo)
 
+    def veicolos(self, tipo, id) -> str | None:
+        if tipo == "bike":
+            bike = Bike(id,"Bike",self.getHora())
+            self.estacionar(bike)
+
+        elif tipo == "moto":
+            moto = Moto(id,"Moto",self.getHora())
+            self.estacionar(moto)
+
+        elif tipo == "carro":
+            carro = Carro(id,"Carro",self.getHora())
+            self.estacionar(carro)
+
+        else:
+            return "fail: veicolo incapas de estacionar"
+
     def procurar(self, id: str) -> Veicolo | None:
         for veicolo in self.__lista:
-            if veicolo.__id == id:
+            if veicolo.getId() == id:
                 return veicolo
         return None
     
-    def pagar(self, veicolo: Veicolo):
-        entrada = veicolo.__horaEntrada
+    def remover(self, veicolo: Veicolo) -> None:
+        self.__lista.remove(veicolo)
+    
+    def pagar(self, veicolo: Veicolo) -> str:
+        entrada = veicolo.getHoraEntrada()
         saida = self.getHora()
         valor = veicolo.calcularValor(saida)
-        return f"{veicolo.__tipo} chegou {entrada} saiu {saida}. Pagar R$ {valor}"
+        return f"{veicolo.getTipo()} chegou {entrada} saiu {saida}. Pagar R$ {valor}"
 
     def __str__(self) -> str:
         lista = "\n".join([str(x) for x in self.__lista])
@@ -85,27 +113,25 @@ def main():
 
         if args[0] == "end":
             break
+
         elif args[0] == "show":
             print(estacionamento)
+
         elif args[0] == "tempo":
             estacionamento.pasarTempo(int(args[1]))
+
         elif args[0] == "estacionar":
-            if args[1] == "bike":
-                bike = Bike(args[2],"Bike",estacionamento.getHora())
-                estacionamento.estacionar(bike)
-            elif args[1] == "moto":
-                moto = Moto(args[2],"Moto",estacionamento.getHora())
-                estacionamento.estacionar(moto)
-            elif args[1] == "carro":
-                carro = Carro(args[2],"Carro",estacionamento.getHora())
-                estacionamento.estacionar(carro)
-                
+            tipo: str = args[1]
+            id: str = args[2]
+            estacionamento.veicolos(tipo,id)
+        
         elif args[0] == "pagar":
             id: str = args[1]
             veicolo = estacionamento.procurar(id)
             if veicolo:
                 print(estacionamento.pagar(veicolo))
-                estacionamento.__lista.remove(veicolo)
+                estacionamento.remover(veicolo)
+
         else:
             print("fail: Comando nao encontrado")
 main()
