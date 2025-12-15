@@ -1,0 +1,3 @@
+2025-12-11 11:23:41, MOVE, v:1, k:poo@estacionamento, mode:PICK
+2025-12-11 11:23:42, EXEC, v:1, k:poo@estacionamento, mode:FULL, rate:0
+2025-12-11 11:23:43, MOVE, v:1, k:poo@estacionamento, mode:BACK
